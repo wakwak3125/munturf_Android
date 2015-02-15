@@ -7,10 +7,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 /**
  * Created by RyoSakaguchi on 15/02/14.
  */
-public class PagerAdapter extends FragmentPagerAdapter{
+public class PagerAdapter extends FragmentPagerAdapter {
 
     public static final String[] pageTitles
-            = {"HOME","LIKE","MESSAGE","PROFILE"};
+            = {"HOME", "LIKE", "MESSAGE", "PROFILE"};
 
 /*
     public static final int[] pageIcons
@@ -25,7 +25,7 @@ public class PagerAdapter extends FragmentPagerAdapter{
     @Override
     public Fragment getItem(int index) {
 
-        switch (index){
+        switch (index) {
             case 0:
                 //トップのタイムライン
                 return new TimeLine();

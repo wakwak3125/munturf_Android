@@ -10,7 +10,7 @@ import com.android.volley.RequestQueue;
 import com.astuetz.PagerSlidingTabStrip;
 
 
-public class MainActivity extends ActionBarActivity implements TimeLine.OnFragmentInteractionListener{
+public class MainActivity extends ActionBarActivity implements TimeLine.OnFragmentInteractionListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -27,24 +27,13 @@ public class MainActivity extends ActionBarActivity implements TimeLine.OnFragme
         setContentView(R.layout.activity_main);
 
         //ViewPagerの初期化
-        viewPager = (ViewPager)findViewById(R.id.pager);
+        viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
 
         //PagerSlidingTabStripの初期化
-        tabStrip = (PagerSlidingTabStrip)findViewById(R.id.tabs);
+        tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabStrip.setViewPager(viewPager);
-
         TimeLine.newInstance();
-
-
-
-
-/*
-        apiRequest = new ApiRequest();
-
-        requestQueue = Volley.newRequestQueue(getApplicationContext());
-        apiRequest.EventRequest();*/
-
     }
 
     @Override

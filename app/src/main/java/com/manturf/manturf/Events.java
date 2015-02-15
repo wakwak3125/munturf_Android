@@ -1,15 +1,19 @@
 package com.manturf.manturf;
 
-import android.util.Log;
+import android.database.Cursor;
+import android.provider.BaseColumns;
+import android.support.annotation.Nullable;
 
+import com.activeandroid.Cache;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
 /**
  * Created by RyoSakaguchi on 15/02/14.
  */
-@Table(name = "EventsList")
+@Table(name = "EventsList",id = BaseColumns._ID)
 public class Events extends Model {
     public static final String TAG = Events.class.getSimpleName();
 
@@ -32,10 +36,35 @@ public class Events extends Model {
     @Column(name = "Updated_at")
     public String updated_at;
 
+
+    public Events(int event_id,
+                  String title,
+                  String content,
+                  String created_at,
+                  String update_at,
+                  String date,
+                  String place,
+                  String time,
+                  String occupation
+    ) {
+        this.events_id = event_id;
+        this.title = title;
+        this.content = content;
+        this.created_at = created_at;
+        this.updated_at = update_at;
+        this.date = date;
+        this.place = place;
+        this.time = time;
+        this.occupation = occupation;
+    }
+
+    public Events() {
+        super();
+    }
+
     public int getEventsId() {
         return events_id;
     }
-
     public void setEventsId(int id) {
         this.events_id = id;
     }
@@ -104,9 +133,30 @@ public class Events extends Model {
         this.updated_at = updated_at;
     }
 
-    public static Events getEvents(int id) {
-        Log.i(TAG,"ここでなにするん？");
-        return null;
+
+    public static Cursor fetchResultCurdor(@Nullable String occupation) {
+        String resultRecords = new Select().from(Events.class).where("Occupation in " + "(" + "'" + occupation + "'" + ")").toSql();
+        Cursor resultCursor = Cache.openDatabase().rawQuery(resultRecords, null);
+        return resultCursor;
     }
+
+/*
+    public static Events getEvents(int events_id) {
+        Log.i(TAG, "ここでなにするん？");
+        return new Select()
+                .from(Events.class)
+                .where("Events_id = ?", events_id)
+                .executeSingle();
+    }
+
+    public static List<Events> getOccupationList(String occupation){
+        Log.i("Occupation = :",occupation);
+        return new Select()
+                .from(Events.class)
+                .where("Occupation = ?", occupation)
+                .orderBy("Events_id DESC")
+                .execute();
+    }
+*/
 
 }

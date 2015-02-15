@@ -28,16 +28,16 @@ public class AppController extends Application {
         super.onCreate();
         Configuration.Builder builder = new Configuration.Builder(this);
         builder.addModelClass(Events.class);
-        builder.setCacheSize(1024*1024*4);
+        builder.setCacheSize(1024 * 1024 * 4);
         builder.setDatabaseName("manturf.db");
-        builder.setDatabaseVersion(2);
+        builder.setDatabaseVersion(4);
         ActiveAndroid.initialize(builder.create());
 
         mInstance = this;
     }
 
     @Override
-    public void onTerminate(){
+    public void onTerminate() {
         super.onTerminate();
         ActiveAndroid.dispose();
     }
