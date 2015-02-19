@@ -1,6 +1,9 @@
 package com.manturf.manturf;
 
 import android.app.Activity;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
+import com.activeandroid.content.ContentProvider;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import java.util.List;
@@ -54,28 +59,53 @@ public class TimeLine extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ListView listView = (ListView)getView().findViewById(R.id.listView);
-        Cursor eventCursor = Events.fetchResultCurdor("");
+        final ListView listView = (ListView) getView().findViewById(R.id.listView);
 
-        TimeLineAdapter adapter = new TimeLineAdapter(getActivity(), eventCursor,0);
-        listView.setAdapter(adapter);
+        /*Cursor eventCursor = Events.fetchResultCurdor("");
+        TimeLineAdapter adapter = new TimeLineAdapter(getActivity(), eventCursor, 0);
+        listView.setAdapter(adapter);*/
 
-        /*Log.i(TAG, "飲み会タイトル = " + eventCursor.getString(eventCursor.getColumnIndexOrThrow("Title")));*/
+        String[] from = {"Title"};
+
+        listView.setAdapter(new SimpleCursorAdapter(
+                getActivity(),
+                android.R.layout.simple_list_item_1,
+                null,
+                from,
+                new int[]{android.R.id.text1},
+                0));
+
+        getActivity().getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
+            @Override
+            public Loader<Cursor> onCreateLoader(int arg0, Bundle cursor) {
+                String [] projection = {
+                        "_id",
+                        "Title"
+                };
+                return new CursorLoader(
+                        getActivity(),
+                        ContentProvider.createUri(Events.class, null),
+                        projection,
+                        null,
+                        null,
+                        null
+                );
+            }
+
+            @Override
+            public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+                ((SimpleCursorAdapter)listView.getAdapter()).swapCursor(cursor);
+            }
+
+            @Override
+            public void onLoaderReset(Loader<Cursor> loader) {
+                ((SimpleCursorAdapter)listView.getAdapter()).swapCursor(null);
+            }
+
+        });
 
     }
 
-    /*private List<Events> getEventsList(){
-        if (mList == null){
-            mList = new ArrayList<Events>();
-            addListData();
-        }
-        return mList;
-    }
-
-    private void addListData() {
-        List<Events> addList = getEventsList();
-        getEventsList().addAll(addList);
-    }*/
 
     @Override
     public void onAttach(Activity activity) {

@@ -21,6 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+        <provider
+            android:name="com.activeandroid.content.ContentProvider"
+            android:authorities="com.manturf.manturf" />
+    </application>　
 
 </manifest>
