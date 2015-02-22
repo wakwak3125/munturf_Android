@@ -61,45 +61,62 @@ public class TimeLine extends Fragment {
         super.onActivityCreated(savedInstanceState);
         final ListView listView = (ListView) getView().findViewById(R.id.listView);
 
-        /*Cursor eventCursor = Events.fetchResultCurdor("");
+        /*Cursor eventCursor = Events.fetchResultCursor("");
         TimeLineAdapter adapter = new TimeLineAdapter(getActivity(), eventCursor, 0);
         listView.setAdapter(adapter);*/
 
+        // レイアウトを指定
+        int layount = android.R.layout.simple_list_item_1;
+        // カーソルの読み込み
+        Cursor c = null;
+        // 取得したいアトリビュートの指定
         String[] from = {"Title"};
+        // 取得した値をどこにセットするかの指定
+        int[] to = {android.R.id.text1};
+        // flagsは知らん
 
         listView.setAdapter(new SimpleCursorAdapter(
                 getActivity(),
-                android.R.layout.simple_list_item_1,
-                null,
+                layount,
+                c,
                 from,
-                new int[]{android.R.id.text1},
+                to,
                 0));
+
+        // とりあえずのITなだけ。ここに取得したい業界をセットする。
+        // メインのタイムラインは1業界に絞るのでコレでいいと思う。
+        // ユーザー情報の業界から引っ張ってくる。
+        // 引っ張ってきた値をここの Occupation に突っ込めばおっけいや！
+        String Occupation = "IT";
 
         getActivity().getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
             @Override
             public Loader<Cursor> onCreateLoader(int arg0, Bundle cursor) {
-                String [] projection = {
-                        "_id",
-                        "Title"
-                };
+                String[] projection = {"_id", "Title"};
+
+                String where = "Occupation in (?,?)";
+
+                String[] args = {"IT", "商社"};
+
+                String sortOrder = "Events_id ASC";
                 return new CursorLoader(
                         getActivity(),
                         ContentProvider.createUri(Events.class, null),
                         projection,
-                        null,
-                        null,
-                        null
+                        where,
+                        args,
+                        sortOrder
                 );
             }
 
             @Override
             public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-                ((SimpleCursorAdapter)listView.getAdapter()).swapCursor(cursor);
+                ((SimpleCursorAdapter) listView.getAdapter()).swapCursor(cursor);
             }
 
             @Override
             public void onLoaderReset(Loader<Cursor> loader) {
-                ((SimpleCursorAdapter)listView.getAdapter()).swapCursor(null);
+                ((SimpleCursorAdapter) listView.getAdapter()).swapCursor(null);
             }
 
         });
