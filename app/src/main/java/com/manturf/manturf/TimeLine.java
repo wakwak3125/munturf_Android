@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
 import com.activeandroid.content.ContentProvider;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -27,7 +26,6 @@ public class TimeLine extends Fragment {
     private OnFragmentInteractionListener mListener;
     private List<Events> mList;
     private TimeLineAdapter mAdapter;
-    private TL_Adapter tlAdapter;
     private ListView mListView;
 
     public TimeLine() {
@@ -61,27 +59,40 @@ public class TimeLine extends Fragment {
         super.onActivityCreated(savedInstanceState);
         final ListView listView = (ListView) getView().findViewById(R.id.listView);
 
+        // adapterのセット
+        mAdapter = new TimeLineAdapter(getActivity(), null, 0);
+        listView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+
+        listView.setDivider(null);
+        listView.setVerticalScrollBarEnabled(false);
+        listView.setSelector(android.R.color.transparent);
+
         /*Cursor eventCursor = Events.fetchResultCursor("");
         TimeLineAdapter adapter = new TimeLineAdapter(getActivity(), eventCursor, 0);
         listView.setAdapter(adapter);*/
 
         // レイアウトを指定
-        int layount = android.R.layout.simple_list_item_1;
+        /*int layount = R.layout.timeline_row;*/
+
         // カーソルの読み込み
-        Cursor c = null;
+        /*Cursor c = null;*/
+
         // 取得したいアトリビュートの指定
-        String[] from = {"Title"};
+        /*String[] from = {"Title","Content","Date"};*/
+
         // 取得した値をどこにセットするかの指定
-        int[] to = {android.R.id.text1};
+        /*int[] to = {R.id.title, R.id.content, R.id.date};*/
+
         // flagsは知らん
 
-        listView.setAdapter(new SimpleCursorAdapter(
+        /*listView.setAdapter(new SimpleCursorAdapter(
                 getActivity(),
                 layount,
                 c,
                 from,
                 to,
-                0));
+                0));*/
 
         // とりあえずのITなだけ。ここに取得したい業界をセットする。
         // メインのタイムラインは1業界に絞るのでコレでいいと思う。
@@ -92,13 +103,11 @@ public class TimeLine extends Fragment {
         getActivity().getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
             @Override
             public Loader<Cursor> onCreateLoader(int arg0, Bundle cursor) {
-                String[] projection = {"_id", "Title"};
-
-                String where = "Occupation in (?,?)";
-
-                String[] args = {"IT", "商社"};
-
+                String[] projection = {"_id", "Title", "Content", "Date", "Occupation"};
+                String where = null;
+                String[] args = null;
                 String sortOrder = "Events_id ASC";
+
                 return new CursorLoader(
                         getActivity(),
                         ContentProvider.createUri(Events.class, null),
@@ -111,18 +120,32 @@ public class TimeLine extends Fragment {
 
             @Override
             public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-                ((SimpleCursorAdapter) listView.getAdapter()).swapCursor(cursor);
+                // SimpleCursorAdapterの場合
+                /*((SimpleCursorAdapter) listView.getAdapter()).swapCursor(cursor);*/
+                // 独自Adapterの場合
+                mAdapter.swapCursor(cursor);
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onLoaderReset(Loader<Cursor> loader) {
-                ((SimpleCursorAdapter) listView.getAdapter()).swapCursor(null);
+                // SimpleCursorAdapterの場合
+                /*((SimpleCursorAdapter) listView.getAdapter()).swapCursor(null);*/
+                // 独自Adapterの場合
+                mAdapter.swapCursor(null);
             }
 
         });
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // Loaderの廃棄
+        getLoaderManager().destroyLoader(0);
+    }
 
     @Override
     public void onAttach(Activity activity) {
