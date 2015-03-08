@@ -3,6 +3,7 @@ package com.manturf.manturf;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -26,12 +27,17 @@ public class MainActivity extends ActionBarActivity implements TimeLine.OnFragme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // ToolBarな
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         //ViewPagerの初期化
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
 
         //PagerSlidingTabStripの初期化
         tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        tabStrip.setTextColor(getResources().getColor(android.R.color.white));
         tabStrip.setViewPager(viewPager);
         TimeLine.newInstance();
     }

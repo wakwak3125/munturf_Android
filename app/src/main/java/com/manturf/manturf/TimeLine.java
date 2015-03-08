@@ -3,6 +3,7 @@ package com.manturf.manturf;
 import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.activeandroid.content.ContentProvider;
@@ -68,31 +70,22 @@ public class TimeLine extends Fragment {
         listView.setVerticalScrollBarEnabled(false);
         listView.setSelector(android.R.color.transparent);
 
-        /*Cursor eventCursor = Events.fetchResultCursor("");
-        TimeLineAdapter adapter = new TimeLineAdapter(getActivity(), eventCursor, 0);
-        listView.setAdapter(adapter);*/
+        // リストのアイテムをクリックした時の動作
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ListView timeline = (ListView)parent;
+                Cursor cursor = (Cursor) timeline.getItemAtPosition(position);
+                System.out.println(cursor.getString(cursor.getColumnIndex("Title")));
 
-        // レイアウトを指定
-        /*int layount = R.layout.timeline_row;*/
+                Intent eventDetail = new Intent(getActivity(), EventDetail.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("EventTitle", cursor.getString(cursor.getColumnIndex("Title")));
 
-        // カーソルの読み込み
-        /*Cursor c = null;*/
-
-        // 取得したいアトリビュートの指定
-        /*String[] from = {"Title","Content","Date"};*/
-
-        // 取得した値をどこにセットするかの指定
-        /*int[] to = {R.id.title, R.id.content, R.id.date};*/
-
-        // flagsは知らん
-
-        /*listView.setAdapter(new SimpleCursorAdapter(
-                getActivity(),
-                layount,
-                c,
-                from,
-                to,
-                0));*/
+                eventDetail.putExtras(bundle);
+                startActivity(eventDetail);
+            }
+        });
 
         // とりあえずのITなだけ。ここに取得したい業界をセットする。
         // メインのタイムラインは1業界に絞るのでコレでいいと思う。
@@ -103,7 +96,7 @@ public class TimeLine extends Fragment {
         getActivity().getLoaderManager().initLoader(0, null, new LoaderManager.LoaderCallbacks<Cursor>() {
             @Override
             public Loader<Cursor> onCreateLoader(int arg0, Bundle cursor) {
-                String[] projection = {"_id", "Title", "Content", "Date", "Occupation"};
+                String[] projection = {"_id", "Title", "Content", "Date", "Occupation", "Place"};
                 String where = null;
                 String[] args = null;
                 String sortOrder = "Events_id ASC";

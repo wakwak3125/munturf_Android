@@ -34,10 +34,27 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
+
+    // BootStrap
+    compile 'com.beardedhen:androidbootstrap:+'
+
+    // Jackson
     compile 'com.fasterxml.jackson.core:jackson-core:2.4.+'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.4.+'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.4.+'
+
+    // Volley
     compile 'com.mcxiaoke.volley:library:1.0.+'
+
+    // タブのやつ
     compile 'com.astuetz:pagerslidingtabstrip:1.0.+'
+
+    // ActiveAndroid
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+
+    // ActionBarがいい感じに消えてくれるあれ！
+    compile 'com.github.manuelpeinado.fadingactionbar:fadingactionbar:3.1.2'
+
+    // 角丸画像のあれ
+    compile 'com.makeramen:roundedimageview:2.0.0'
 }

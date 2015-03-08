@@ -10,6 +10,8 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+
 /**
  * Created by RyoSakaguchi on 15/02/14.
  */
@@ -20,7 +22,8 @@ public class TimeLineAdapter extends CursorAdapter {
         TextView mTitle;
         TextView mContent;
         TextView mDate;
-        TextView mOccupation;
+        BootstrapButton mOccupation;
+        BootstrapButton mPlace;
         ImageView mImage;
 
     }
@@ -39,12 +42,13 @@ public class TimeLineAdapter extends CursorAdapter {
         String content = cursor.getString(cursor.getColumnIndexOrThrow("Content"));
         String date = cursor.getString(cursor.getColumnIndexOrThrow("Date"));
         String occupation = cursor.getString(cursor.getColumnIndexOrThrow("Occupation"));
+        String place = cursor.getString(cursor.getColumnIndexOrThrow("Place"));
 
         holder.mTitle.setText(title);
         holder.mContent.setText(content);
         holder.mDate.setText(date);
         holder.mOccupation.setText(occupation);
-
+        holder.mPlace.setText(place);
         Log.i("bindView内のタイトル = ", title);
     }
 
@@ -56,7 +60,8 @@ public class TimeLineAdapter extends CursorAdapter {
         holder.mTitle = (TextView) view.findViewById(R.id.title);
         holder.mContent = (TextView) view.findViewById(R.id.content);
         holder.mDate = (TextView) view.findViewById(R.id.date);
-        holder.mOccupation = (TextView) view.findViewById(R.id.occupation);
+        holder.mOccupation = (BootstrapButton) view.findViewById(R.id.occupation);
+        holder.mPlace = (BootstrapButton) view.findViewById(R.id.place);
 
         view.setTag(holder);
         return view;

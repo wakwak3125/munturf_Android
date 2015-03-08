@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_values">
+        <item>あなたへのオススメ</item>
+        <item>新着順</item>
+        <item>全て</item>
+    </string-array>
+</resources>
