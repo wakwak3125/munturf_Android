@@ -7,15 +7,15 @@
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="#37474F"
+        android:orientation="vertical"
         tools:context="com.manturf.manturf.EventDetail">
 
         <android.support.v7.widget.Toolbar
-            android:background="?attr/colorPrimary"
             android:id="@+id/toolbar2"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize" />
 
         <ImageView
@@ -27,42 +27,51 @@
             android:src="@drawable/image1" />
 
 
-        <FrameLayout
+        <RelativeLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="4dp"
+            android:paddingBottom="2dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:paddingTop="8dp">
+            android:paddingTop="16dp">
 
             <ImageView
                 android:id="@+id/UserImage"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
-                android:src="@android:drawable/sym_def_app_icon" />
+                android:adjustViewBounds="false"
+                android:cropToPadding="false"
+                android:src="@drawable/profileimagesample" />
 
             <TextView
                 android:id="@+id/Etitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/UserImage"
                 android:layout_gravity="top"
-                android:layout_marginLeft="56dp"
-                android:text="EventTitle"
-                android:textSize="20sp" />
+                android:layout_marginLeft="16dp"
+                android:layout_toEndOf="@+id/UserImage"
+                android:layout_toRightOf="@+id/UserImage"
+                android:text="イベントタイトルイベントタイトルイベントタイトル"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left|center_vertical"
-                android:layout_marginLeft="56dp"
-                android:layout_marginTop="10dp"
-                android:text="User_name"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/Etitle"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@+id/UserImage"
+                android:layout_toRightOf="@+id/UserImage"
+                android:text="ユーザーネーム"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="16sp" />
-        </FrameLayout>
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
@@ -70,53 +79,158 @@
             android:layout_margin="8dp"
             android:background="@color/black" />
 
+        <RelativeLayout
+            android:id="@+id/joined_or_like"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingBottom="2dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp">
 
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView"
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:text="お気に入りの数" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="false"
+                android:layout_centerVertical="true"
+
+                android:layout_marginRight="8dp"
+                android:layout_toEndOf="@id/button"
+                android:text="99"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:layout_toEndOf="@id/textView"
+                android:text="参加してる数" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/button2"
+                android:text="99"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_margin="8dp"
+            android:background="@color/black" />
+
+        <RelativeLayout
+            android:id="@+id/content_area"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="false">
-
-            <FrameLayout
-                android:id="@+id/join_member"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="4dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingTop="0dp">
-
-                <TextView
-                    android:id="@+id/member"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="メンバー" />
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="18dp"
-                    android:src="@android:mipmap/sym_def_app_icon" />
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="48dp"
-                    android:layout_marginTop="18dp"
-                    android:src="@android:mipmap/sym_def_app_icon" />
+            android:paddingBottom="2dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp">
 
 
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="96dp"
-                    android:layout_marginTop="18dp"
-                    android:src="@android:mipmap/sym_def_app_icon" />
-            </FrameLayout>
-        </HorizontalScrollView>
+            <TextView
+                android:id="@+id/content_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:paddingBottom="8dp"
+                android:text="なにをする？"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/content_title"
+                android:text="親譲りの無鉄砲で小供の時から/損ばかりしている。小学校に居る時分学校の二階から飛び降りて一週間ほど腰を抜かした事がある。なぜそんな無闇をしたと聞く人があるかも知れぬ。別段深い理由でもない。新築の二階から首を出していたら、同級生の一人が冗談に、いくら威張っても、そこから飛び降りる事は出来まい。弱虫やーい。と囃したからである。小使に負ぶさって帰って来た時、おやじが大きな眼をして二階ぐらいから飛び降りて腰を抜かす奴があるかと云ったから、この次は抜かさずに飛んで見せますと答えた。（青空文庫より）"
+                android:textSize="16dp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_margin="8dp"
+            android:background="@color/black" />
+
+        <RelativeLayout
+            android:id="@+id/place_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="2dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp">
+
+
+            <TextView
+                android:id="@+id/place_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:paddingBottom="8dp"
+                android:text="どこでする？"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/place_title"
+                android:text="まだ未定" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_margin="8dp"
+            android:background="@color/black" />
+
+        <RelativeLayout
+            android:id="@+id/date_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="2dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:touchscreenBlocksFocus="false">
+
+
+            <TextView
+                android:id="@+id/date_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:paddingBottom="8dp"
+                android:text="いつする？"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/date_title"
+                android:text="まだ未定" />
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
